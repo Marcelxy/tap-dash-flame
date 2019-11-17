@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1008062888067",
+    "firebase_url": "https://tap-dash-eb007.firebaseio.com",
+    "project_id": "tap-dash-eb007",
+    "storage_bucket": "tap-dash-eb007.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1008062888067:android:832706ba7b23a9cf0d03b6",
+        "android_client_info": {
+          "package_name": "de.fs.tap_dash_flame"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1008062888067-m1002d78n7p1tggql2a1rs065v7vft4l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJFK-6xSRp-4Z1ZJQi90Jsl9cyWJv-JgY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1008062888067-m1002d78n7p1tggql2a1rs065v7vft4l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
