@@ -1,7 +1,9 @@
-import 'main.dart';
+import 'mainPage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
 void main() => runApp(MyApp());
@@ -80,19 +82,19 @@ class _RegisterPageState extends State<RegisterPage> {
     final FirebaseUser user =
         (await _auth.signInWithCredential(credential)).user;
     if (user != null) {
+      _createPlayerInDatabase(user);
       print("Angemeldet über Google mit " + user.displayName);
       print(user);
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MyAppHome()),
+        MaterialPageRoute(builder: (context) => MainPage()),
       );
       return user;
     }
     return null;
   }
 
-  void signOutGoogle() async {
-    await _googleSignIn.signOut();
-    print("Spieler hat sich ausgeloggt.");
+  void _createPlayerInDatabase(FirebaseUser user) {
+    Firestore.instance.collection('player').document().setData({ 'userName' : user.displayName});
   }
 }
