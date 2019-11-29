@@ -1,4 +1,5 @@
-import 'mainPage.dart';
+import 'package:tap_dash_flame/screens/mainPage.dart';
+import 'package:tap_dash_flame/datastructures/player.dart';
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -95,6 +96,12 @@ class _RegisterPageState extends State<RegisterPage> {
   }
 
   void _createPlayerInDatabase(FirebaseUser user) {
-    Firestore.instance.collection('player').document().setData({ 'userName' : user.displayName});
+    Player player = new Player(user.email, user.displayName);
+    Firestore.instance.collection('player').document(user.uid).setData({
+      'email': player.email,
+      'playerName': player.playerName,
+      'exp': player.exp,
+      'coins': player.coins
+    });
   }
 }
