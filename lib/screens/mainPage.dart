@@ -1,7 +1,11 @@
 import 'package:tap_dash_flame/screens/registerPage.dart';
+import 'package:tap_dash_flame/screens/highscorePage.dart';
+import 'package:tap_dash_flame/datastructures/player.dart';
 
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -24,7 +28,11 @@ class _MainPageState extends State<MainPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('Hallo '),
+                Text('Hallo ' + getCurrentUser().toString()),
+                RaisedButton(
+                  child: Text('Rangliste'),
+                  onPressed: () => _showHighscore(),
+                ),
                 RaisedButton(
                   child: Text('Ausloggen'),
                   onPressed: () => _signOutGoogle(),
@@ -37,6 +45,14 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  void _showHighscore() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HighscorePage()),
+    );
+    print("Spieler wechselt zur Ranglistenansicht.");
+  }
+
   void _signOutGoogle() async {
     await _googleSignIn.signOut();
     Navigator.push(
@@ -44,5 +60,11 @@ class _MainPageState extends State<MainPage> {
       MaterialPageRoute(builder: (context) => MyApp()),
     );
     print("Spieler hat sich ausgeloggt.");
+  }
+
+  Future<String> getCurrentUser() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+    print(user.displayName);
+    return user.displayName;
   }
 }
