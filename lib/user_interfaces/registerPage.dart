@@ -1,4 +1,4 @@
-import 'package:tap_dash_flame/screens/mainPage.dart';
+import 'package:tap_dash_flame/user_interfaces/mainPage.dart';
 import 'package:tap_dash_flame/datastructures/player.dart';
 
 import 'package:flutter/material.dart';

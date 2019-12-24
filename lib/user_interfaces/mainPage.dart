@@ -1,8 +1,10 @@
-import 'package:tap_dash_flame/screens/registerPage.dart';
-import 'package:tap_dash_flame/screens/highscorePage.dart';
+import 'package:tap_dash_flame/user_interfaces/registerPage.dart';
+import 'package:tap_dash_flame/user_interfaces/profilPage.dart';
+import 'package:tap_dash_flame/user_interfaces/highscorePage.dart';
+import 'package:tap_dash_flame/user_interfaces/levelPage.dart';
+import 'package:tap_dash_flame/user_interfaces/SettingsPage.dart';
 
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class MainPage extends StatefulWidget {
@@ -13,25 +15,24 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
+  int currentPage = 0;
+  final List<Widget> pages = [
+    ProfilPage(),
+    HighscorePage(),
+    LevelPage(),
+    SettingsPage(),
+  ];
+
+  Widget currentScreen = HighscorePage();
+
+  final PageStorageBucket bucket = PageStorageBucket();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Tap Dash',
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('Tap Dash'),
-          centerTitle: true,
-        ),
-        body: Container(
-          child: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-
-              ],
-            ),
-          ),
-        ),
+        body: PageStorage(bucket: bucket, child: currentScreen),
         floatingActionButton: FloatingActionButton(
           onPressed: null,
           backgroundColor: Colors.teal.shade300,
@@ -53,18 +54,18 @@ class _MainPageState extends State<MainPage> {
                   children: <Widget>[
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: null,
+                      onPressed: () => _showProfilPage(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
                             Icons.person,
-                            color: Colors.teal.shade300,
+                            color: currentPage == 0 ? Colors.black : Colors.teal.shade300,
                           ),
                           Text(
                             "Profil",
                             style: TextStyle(
-                              color: Colors.teal.shade300,
+                              color: currentPage == 0 ? Colors.black : Colors.teal.shade300,
                             ),
                           ),
                         ],
@@ -72,18 +73,18 @@ class _MainPageState extends State<MainPage> {
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: () => _showHighscore(),
+                      onPressed: () => _showHighscorePage(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
                             Icons.equalizer,
-                            color: Colors.teal.shade300,
+                            color: currentPage == 1 ? Colors.black : Colors.teal.shade300,
                           ),
                           Text(
                             "Rangliste",
                             style: TextStyle(
-                              color: Colors.teal.shade300,
+                              color: currentPage == 1 ? Colors.black : Colors.teal.shade300,
                             ),
                           ),
                         ],
@@ -97,18 +98,18 @@ class _MainPageState extends State<MainPage> {
                   children: <Widget>[
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: null,
+                      onPressed: () => _showLevelPage(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
                             Icons.dashboard,
-                            color: Colors.teal.shade300,
+                            color: currentPage == 2 ? Colors.black : Colors.teal.shade300,
                           ),
                           Text(
                             "Level",
                             style: TextStyle(
-                              color: Colors.teal.shade300,
+                              color: currentPage == 2 ? Colors.black : Colors.teal.shade300,
                             ),
                           ),
                         ],
@@ -116,18 +117,18 @@ class _MainPageState extends State<MainPage> {
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: null,
+                      onPressed: () => _showSettingsPage(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
                             Icons.settings,
-                            color: Colors.teal.shade300,
+                            color: currentPage == 3 ? Colors.black : Colors.teal.shade300,
                           ),
                           Text(
                             "Konfig",
                             style: TextStyle(
-                              color: Colors.teal.shade300,
+                              color: currentPage == 3 ? Colors.black : Colors.teal.shade300,
                             ),
                           ),
                         ],
@@ -143,12 +144,36 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  void _showHighscore() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => HighscorePage()),
-    );
+  void _showProfilPage() {
+    setState(() {
+      currentScreen = ProfilPage();
+      currentPage = 0;
+    });
+    print("Spieler wechselt zu seinem Benutzerprofil.");
+  }
+
+  void _showHighscorePage() {
+    setState(() {
+      currentScreen = HighscorePage();
+      currentPage = 1;
+    });
     print("Spieler wechselt zur Ranglistenansicht.");
+  }
+
+  void _showLevelPage() {
+    setState(() {
+      currentScreen = LevelPage();
+      currentPage = 2;
+    });
+    print("Spieler wechselt zur Level Auswahl.");
+  }
+
+  void _showSettingsPage() {
+    setState(() {
+      currentScreen = SettingsPage();
+      currentPage = 3;
+    });
+    print("Spieler wechselt zu Einstellungen.");
   }
 
   void _signOutGoogle() async {
