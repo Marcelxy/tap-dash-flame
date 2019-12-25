@@ -2,6 +2,7 @@ import 'package:tap_dash_flame/user_interfaces/registerPage.dart';
 import 'package:tap_dash_flame/user_interfaces/profilPage.dart';
 import 'package:tap_dash_flame/user_interfaces/highscorePage.dart';
 import 'package:tap_dash_flame/user_interfaces/levelPage.dart';
+import 'package:tap_dash_flame/user_interfaces/shopPage.dart';
 import 'package:tap_dash_flame/user_interfaces/SettingsPage.dart';
 
 import 'package:flutter/material.dart';
@@ -117,16 +118,16 @@ class _MainPageState extends State<MainPage> {
                     ),
                     MaterialButton(
                       minWidth: 40,
-                      onPressed: () => _showSettingsPage(),
+                      onPressed: () => _showShopPage(),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.settings,
+                            Icons.shop_two,
                             color: currentPage == 3 ? Colors.black : Colors.teal.shade300,
                           ),
                           Text(
-                            "Konfig",
+                            "Shop",
                             style: TextStyle(
                               color: currentPage == 3 ? Colors.black : Colors.teal.shade300,
                             ),
@@ -168,12 +169,12 @@ class _MainPageState extends State<MainPage> {
     print("Spieler wechselt zur Level Auswahl.");
   }
 
-  void _showSettingsPage() {
+  void _showShopPage() {
     setState(() {
-      currentScreen = SettingsPage();
+      currentScreen = ShopPage();
       currentPage = 3;
     });
-    print("Spieler wechselt zu Einstellungen.");
+    print("Spieler wechselt zum Shop.");
   }
 
   void _signOutGoogle() async {
