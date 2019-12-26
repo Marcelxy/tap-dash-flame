@@ -43,7 +43,12 @@ class BookList extends StatelessWidget {
               children:
                   snapshot.data.documents.map((DocumentSnapshot document) {
                 return new ListTile(
-                  //leading: Icon(),
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      "${document['playerName'][0]}",
+                    )
+                  ),
                   title: new Text(document['playerName']),
                   subtitle: new Text(document['exp'].toString()),
                 );
