@@ -25,10 +25,12 @@ dependencies:
   cupertino_icons: ^0.1.2
   firebase_auth: ^0.14.0+9
   google_sign_in: ^4.0.4
-  flutter_facebook_login:
+  flutter_facebook_login: ^3.0.0
   flutter_auth_buttons: ^0.6.0
   cloud_firestore: ^0.12.10+2
   flame: ^0.17.2
+  box2d_flame: ^0.4.4
+  sensors: ^0.4.1+1
 
 dev_dependencies:
   flutter_test:

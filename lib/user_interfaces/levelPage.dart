@@ -1,6 +1,8 @@
+import 'package:flame/util.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flame/util.dart';
+import 'package:flutter/gestures.dart';
 
 import 'package:tap_dash_flame/game_enigne/tapDashGame.dart';
 
@@ -38,11 +40,15 @@ class _LevelPageState extends State<LevelPage> {
   }
 
   void _startLevel() async {
+    WidgetsFlutterBinding.ensureInitialized();
     Util flameUtil = Util();
     await flameUtil.fullScreen();
     await flameUtil.setOrientation(DeviceOrientation.portraitUp);
 
-    TapDashGame game = TapDashGame();
+    TapDashGame game = new TapDashGame();
+    TapGestureRecognizer tapper = TapGestureRecognizer();
+    tapper.onTapDown = game.onTapDown;
+    flameUtil.addGestureRecognizer(tapper);
     runApp(game.widget);
     print("Spieler wechselt zum Spielbildschirm.");
   }

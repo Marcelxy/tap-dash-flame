@@ -35,6 +35,7 @@ class _RegisterPageState extends State<RegisterPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Tap Dash'),
+        automaticallyImplyLeading: false,
       ),
       body: Container(
         color: Colors.white,

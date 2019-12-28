@@ -3,7 +3,7 @@ import 'package:tap_dash_flame/user_interfaces/profilPage.dart';
 import 'package:tap_dash_flame/user_interfaces/highscorePage.dart';
 import 'package:tap_dash_flame/user_interfaces/levelPage.dart';
 import 'package:tap_dash_flame/user_interfaces/shopPage.dart';
-import 'package:tap_dash_flame/user_interfaces/SettingsPage.dart';
+import 'package:tap_dash_flame/user_interfaces/settingsPage.dart';
 
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -16,7 +16,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-  int currentPage = 0;
+  int currentPage = 2;    // Startseite Level Auswahl
   final List<Widget> pages = [
     ProfilPage(),
     HighscorePage(),
@@ -24,7 +24,7 @@ class _MainPageState extends State<MainPage> {
     SettingsPage(),
   ];
 
-  Widget currentScreen = HighscorePage();
+  Widget currentScreen = LevelPage();
 
   final PageStorageBucket bucket = PageStorageBucket();
 
