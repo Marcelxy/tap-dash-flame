@@ -30,7 +30,7 @@ dependencies:
   cloud_firestore: ^0.12.10+2
   flame: ^0.17.2
   box2d_flame: ^0.4.4
-  sensors: ^0.4.1+1
+  progress_dialog: ^1.2.0
 
 dev_dependencies:
   flutter_test:

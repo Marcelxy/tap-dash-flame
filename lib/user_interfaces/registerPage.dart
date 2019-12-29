@@ -8,6 +8,8 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 
+import 'package:progress_dialog/progress_dialog.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -30,8 +32,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FacebookLogin fbLogin = FacebookLogin();
 
+  ProgressDialog progressDialog;
+
   @override
   Widget build(BuildContext context) {
+    progressDialog = new ProgressDialog(context,
+        type: ProgressDialogType.Normal, isDismissible: true, showLogs: false);
+    progressDialog.style(message: "Login...");
     return Scaffold(
       appBar: AppBar(
         title: Text('Tap Dash'),
@@ -74,6 +81,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Future<FirebaseUser> _signInWithGoogle() async {
     FirebaseUser currentUser;
     try {
+      progressDialog.show();
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
@@ -88,10 +96,12 @@ class _RegisterPageState extends State<RegisterPage> {
         _createPlayerInDatabase(currentUser);
         print("Angemeldet über Google mit " + currentUser.email);
         print(currentUser);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          progressDialog.hide().whenComplete(() {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainPage()));
+          });
+        });
         return currentUser;
       }
     } catch (e) {
@@ -105,6 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
     FirebaseUser currentUser;
     fbLogin.loginBehavior = FacebookLoginBehavior.webViewOnly;
     try {
+      progressDialog.show();
       final FacebookLoginResult facebookLoginResult =
           await fbLogin.logIn(['email']);
       if (facebookLoginResult.status == FacebookLoginStatus.loggedIn) {
@@ -118,10 +129,12 @@ class _RegisterPageState extends State<RegisterPage> {
         _createPlayerInDatabase(user);
         print("Angemeldet über Facebook mit " + user.email);
         print(user);
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => MainPage()),
-        );
+        Future.delayed(Duration(seconds: 1)).then((value) {
+          progressDialog.hide().whenComplete(() {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MainPage()));
+          });
+        });
         return currentUser;
       }
     } catch (e) {
